@@ -13,6 +13,8 @@
     "googleapis": "^47.0.0",
     "js-yaml": "^3.13.1",
     "lodash": "^4.17.15",
+    "lodash.groupby": "^4.6.0",
+    "lodash.set": "^4.3.2",
     "markdown-it": "^10.0.0",
     "markdown-it-anchor": "^5.2.5",
     "moment": "^2.24.0"
