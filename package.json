@@ -1,6 +1,6 @@
 {
-  "name": "googlesheets",
-  "version": "1.0.0",
+  "name": "@financial-times/sheet-reader",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
