@@ -1,3 +1,4 @@
+const set = require('lodash.set');
 const debug = require('debug')('builder');
 const { sheet, sheetDetails } = require('./sheet');
 const { getSheet } = require('./sheets-api');
@@ -11,18 +12,19 @@ function prepareSheet(rawData) {
 		return rows;
 	}
 
-	// todo: this implementation is not necessarily performant. 
-	// current/old implementation compiles a row function for performance
+	const result = rows.map(() => ({}));
 
-	return columns.reduce((result, col) => {
-			// todo: support namespacing. do so in a way that's consistent with old implementation
-			for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
-				// todo: why are some empty string and others undefined
-				// todo: current impl has nulls for empty cells
-				result[rowIndex][col.key] = col.formatter(rows[rowIndex][col.index]);
-			}
-			return result;
-	}, rows.map(() => ({})));
+	for (let column of columns) {
+		for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
+			// todo: why are some empty string and others undefined
+			// todo: current impl has nulls for empty cells
+			const value = column.formatter(rows[rowIndex][column.index]);
+			const row = result[rowIndex];
+			set(row, column.key, value);
+		}
+	}
+
+	return result;
 }
 
 function dataPreparer(sheets) {
