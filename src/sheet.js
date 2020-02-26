@@ -9,7 +9,7 @@ function isRestricted(raw) {
 
 function sheet(rawData) {
 
-	const firstRow = rawData.shift();
+	const firstRow = rawData.shift() || [];
 	const cols = firstRow.map(column).filter(col => Boolean(col.key));
 
 	const restrictRowCol = cols.findIndex(
