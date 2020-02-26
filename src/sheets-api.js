@@ -1,4 +1,5 @@
 const { google } = require('googleapis');
+const { NotFound, Forbidden, BadRequest, InternalServerError, RequestTimeout } = require('http-errors');
 const debug = require('debug')('sheetsAPI');
 
 function getSpreadsheetClient(email, subject, key) {
@@ -16,18 +17,44 @@ function getSpreadsheetClient(email, subject, key) {
 }
 
 async function getSheet(client, spreadsheetId, sheetName) {
+
+	if (!spreadsheetId) {
+		throw new BadRequest('Spreadsheet ID required');
+	}
+
+	if (!sheetName) {
+		throw new BadRequest('Sheet name required');
+	}
+
 	try {
-		debug(`Fetch spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
-		const { data: { values } } = await client.spreadsheets.values.get({
+		debug(`Request spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
+		const response = await client.spreadsheets.values.get({
 			spreadsheetId,
 			range: sheetName,
 			majorDimension: 'ROWS',
 		})
-		debug(`Values spreadsheetId=${spreadsheetId} sheetName=${sheetName} rowCount=${values.length}`)
+		const values = response.data.values || []
+		debug(`Response spreadsheetId=${spreadsheetId} sheetName=${sheetName} rowCount=${values.length}`)
 		return values;
 	} catch (error) {
-		// todo sheet fetch error handling.
-		debug(`Error fetching message=${error.message} spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
+		if (error.code) {
+			switch (error.code) {
+				case 400:
+					throw new BadRequest('Bad Request [possibly invalid spreadsheet ID]')
+				case 403:
+					throw new Forbidden(`No permission to access spreadsheet`)
+				case 404:
+					throw new NotFound(`Spreadsheet not found`)
+				case 'ETIMEDOUT':
+					throw new RequestTimeout(`Google API timed out`)
+				case 'ENOTFOUND':
+				case 'ESOCKETTIMEDOUT':
+					throw new InternalServerError('Network Error')
+				default:
+					break;
+			}
+		}
+
 		throw error;
 	}
 }
