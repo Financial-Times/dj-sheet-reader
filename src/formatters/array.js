@@ -57,9 +57,7 @@ module.exports = {
 	li: list,
 	array,
 	arr: array,
-
-	// TODO: Confirm if these are used. Deprecate 
-	md2,
-	md2semi,
-	map,
+	md2,			// TODO: Confirm if used. Deprecate
+	md2semi,	// TODO: Confirm if used. Deprecate
+	map,			// TODO: Confirm if used. Deprecate
 };
