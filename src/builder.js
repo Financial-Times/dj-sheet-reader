@@ -13,19 +13,20 @@ function prepareSheetData() {
 			return rows;
 		}
 
-	const result = rows.map(() => ({}));
+		const result = rows.map(() => ({}));
 
-	for (let column of columns) {
-		for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
-			// todo: why are some empty string and others undefined
-			// todo: current impl has nulls for empty cells
-			const value = column.formatter(rows[rowIndex][column.index]);
-			const row = result[rowIndex];
-			set(row, column.key, value);
+		for (let column of columns) {
+			for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
+				// todo: why are some empty string and others undefined
+				// todo: current impl has nulls for empty cells
+				const value = column.formatter(rows[rowIndex][column.index]);
+				const row = result[rowIndex];
+				set(row, column.key, value);
+			}
 		}
-	}
 
-	return result;
+		return result;
+	}
 }
 
 function prepareSpreadsheetData(sheets) {
@@ -81,4 +82,4 @@ function build(client, spreadsheetId, sheetNames, options) {
 
 module.exports = {
 	build,
-};
+}
