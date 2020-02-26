@@ -3,14 +3,15 @@ const debug = require('debug')('builder');
 const { sheet, sheetDetails } = require('./sheet');
 const { getSheet } = require('./sheets-api');
 
-function prepareSheet(rawData) {
+function prepareSheetData() {
+	return function processSheet(rawData) {
 
-	const { columns, rows } = sheet(rawData);
-	const numRows = rows.length;
+		const { columns, rows } = sheet(rawData);
+		const numRows = rows.length;
 
-	if (!numRows) {
-		return rows;
-	}
+		if (!numRows) {
+			return rows;
+		}
 
 	const result = rows.map(() => ({}));
 
@@ -27,31 +28,28 @@ function prepareSheet(rawData) {
 	return result;
 }
 
-function dataPreparer(sheets) {
+function prepareSpreadsheetData(sheets) {
 
 	// shallow copy array to preserve order
 	// of the sheets (see note about sheet order below)
 	sheets = sheets.concat();
 
-	return function prepareAllData(sheetsData) {
+	return function processSheets(sheetsData) {
 		const combinedSheets = {};
 
-		// # Bertha legacy compatibility 1:
+		// _Bertha legacy compatibility #1:_
+		// Legacy behaviour
+		// 1. An optional sheet that exists, but has zero rows, produces and empty array
+		// 2. An optional sheet that does not exist produces undefined
+		// New behaviour
+		// It's not possible to replicate the legacy behaviour so the new way is (1) in all cases - empty array. 
+
+		// _Bertha legacy compatibility #2:_
 		// Object props are declared in the order sheetNames were specified.
 		// This helps to make the JSON output predictable and consistent
 		// Which is good for caching, etag creation etc.
 		sheets.forEach((sheet, index) => {
-
-			const data = sheetsData[index];
-
-			// # Bertha legacy compatibility 2:
-			// optional sheets with with no data are not included in the response.
-			// mandatory sheets with no data return an empty array
-			if (sheet.optional && !data.length) {
-				return;
-			}
-
-			combinedSheets[sheet.key] = data;
+			combinedSheets[sheet.key] = sheetsData[index];
 		})
 
 		return combinedSheets;
@@ -67,29 +65,18 @@ function build(client, spreadsheetId, sheetNames, options) {
 	const sheets = sheetNames.map(sheetDetails);
 	const opts = Object.assign({}, defaultOptions, options || {});
 
-	function onOptionalSheetError(error) {
-		// todo confirm empty array is correct behaviour
-		console.log('Didnt find optional sheet')
-		return [];
-	}
-
-	function onMandatorySheetError(error) {
-		// todo: compare current implementation. do we want to immediately re-throw or do we want to gather a list of all missing sheets?
-		console.error('Didnt find Mandatory sheet')
-		throw error;
-	}
-
 	const promises = sheets.map(
 		sheet => getSheet(
 			client,
 			spreadsheetId,
 			sheet.sheetName
 		)
-			.then(prepareSheet)
-			.catch(sheet.optional ? onOptionalSheetError : onMandatorySheetError)
+		.then(prepareSheetData())
+		// todo: catch error and cancel all promises?
+		// .catch(onError)
 	);
 
-	return Promise.all(promises).then(dataPreparer(sheets));
+	return Promise.all(promises).then(prepareSpreadsheetData(sheets))
 }
 
 module.exports = {
