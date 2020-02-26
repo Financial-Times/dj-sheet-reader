@@ -51,4 +51,5 @@ module.exports = {
 	sheet,
 	sheetKey,
 	sheetDetails,
+	isRestricted,
 };
