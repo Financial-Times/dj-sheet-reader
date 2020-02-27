@@ -7,13 +7,14 @@
     "test": "jest"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
+  "homepage": "https://github.com/financial-times/dj-sheet-reader#readme",
   "dependencies": {
+    "commander": "^4.1.1",
     "debug": "^4.1.1",
     "googleapis": "^47.0.0",
     "http-errors": "^1.7.3",
     "js-yaml": "^3.13.1",
-    "lodash": "^4.17.15",
     "lodash.groupby": "^4.6.0",
     "lodash.set": "^4.3.2",
     "markdown-it": "^10.0.0",
