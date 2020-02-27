@@ -1,7 +1,6 @@
 const groupBy = require('lodash.groupby');
 const { column } = require('./column');
 
-
 function isRestricted(raw) {
 	if (!raw) return false;
 	return /^(y|yes|true|ok|on)$/i.test(raw.trim());
@@ -31,7 +30,7 @@ function sheet(rawData) {
 	});
 
 	let rows;
-	
+
 	if (restrictRowCol === -1) {
 		rows = rawData;
 	} else {
