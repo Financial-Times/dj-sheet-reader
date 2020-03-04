@@ -21,7 +21,7 @@ async function build(client, spreadsheetId, sheetNames, options) {
 	const sheets = sheetNames.map(sheetDetails);
 
 	const promises = sheets.map(sheet => (
-		getSheet(client, spreadsheetId, sheet.sheetName).then(prepareSheetData)
+		getSheet(client, spreadsheetId, sheet.sheetName, sheet.optional).then(prepareSheetData)
 		// todo: catch error and cancel all promises?
 		// .catch(onError)
 	));
