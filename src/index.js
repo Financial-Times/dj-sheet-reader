@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const { build } = require('./builder');
 const { getSpreadsheetClient } = require('./sheets-api');
 
@@ -21,9 +22,16 @@ function SheetReader(options) {
 			refreshAuth()
 		}
 
-		const data = await build(client, spreadsheetId, sheetNames, options);
-
-		return data;
+		try {
+			const data = await build(client, spreadsheetId, sheetNames, options);	
+			return data;
+		} catch (error) {
+			console.error(`Error: statusCode=${error.statusCode} message=${error.message}`)
+			if (!error.statusCode) {
+				throw createError(500, error, {expose: true})
+			}
+			throw error;
+		}
 	}
 
 	// Helper to help with legacy compatibility
