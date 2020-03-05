@@ -13,8 +13,6 @@ function getSpreadsheetClient(email, subject, key) {
 		return google.sheets({
 			version: 'v4',
 			auth: new google.auth.JWT({
-				// todo: find out how long the JWT expiry is
-				// todo: refresh the token
 				email: email || EMAIL,
 				key: key || KEY,
 				scopes: ['https://www.googleapis.com/auth/drive'],
@@ -71,15 +69,16 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 	}
 
 	try {
+
 		debug(`Request spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
-		const response = await client.spreadsheets.values.get({
+		const { data: { values } } = await client.spreadsheets.values.get({
 			spreadsheetId,
 			range: sheetName,
 			majorDimension: 'ROWS',
 		}, nodeFetchOptions)
-		const values = response.data.values || []
-		debug(`Response spreadsheetId=${spreadsheetId} sheetName=${sheetName} rowCount=${values.length}`)
-		return values
+		debug(`Response spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
+		return values || []
+
 	} catch (error) {
 
 		if (signal && signal.aborted && error.name && error.name === 'AbortError') {
