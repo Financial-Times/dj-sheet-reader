@@ -2,6 +2,11 @@ const { google } = require('googleapis');
 const createError = require('http-errors');
 const { FetchError } = require('node-fetch');
 const debug = require('debug')('sheetsAPI');
+const { Agent } = require('https');
+const AbortController = require('abort-controller');
+const pTimeout = require('p-timeout');
+
+const agent = new Agent({ keepAlive: true, keepAliveMsecs: 1 });
 
 function getSpreadsheetClient(email, subject, key) {
 	try {		
@@ -22,7 +27,31 @@ function getSpreadsheetClient(email, subject, key) {
 	}
 }
 
-async function getSheet(client, spreadsheetId, sheetName, isOptional) {
+async function getSheets(client, spreadsheetId, sheets, transformSheet) {
+	if (!spreadsheetId) {
+		throw new new createError.BadRequest('spreadsheetId is required');
+	}
+
+	if (!sheets) {
+		throw new createError.BadRequest('sheetNames is required');
+	}
+
+	const controller = new AbortController();
+
+	try {
+		const timeout = 1000 * 19;
+		const timeoutError = new createError.RequestTimeout(`Google API timed out spreadsheetId=${spreadsheetId}`);
+		const promises = sheets.map(sheet => (
+			getSheet(client, spreadsheetId, sheet.sheetName, sheet.optional, controller.signal).then(transformSheet)
+		));
+		return await pTimeout(Promise.all(promises), timeout, timeoutError)
+	} catch(error) {
+		controller.abort()
+		throw error
+	}
+}
+
+async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 
 	if (!spreadsheetId) {
 		throw new createError.BadRequest('Spreadsheet ID required')
@@ -32,18 +61,34 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional) {
 		throw new createError.BadRequest('Sheet name required')
 	}
 
+	const nodeFetchOptions = {
+		timeout: 1000 * 20,
+		agent,
+	};
+
+	if (signal) {
+		nodeFetchOptions.signal = signal;
+	}
+
 	try {
 		debug(`Request spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
 		const response = await client.spreadsheets.values.get({
 			spreadsheetId,
 			range: sheetName,
 			majorDimension: 'ROWS',
-		})
+		}, nodeFetchOptions)
 		const values = response.data.values || []
 		debug(`Response spreadsheetId=${spreadsheetId} sheetName=${sheetName} rowCount=${values.length}`)
 		return values;
 	} catch (error) {
+
+		if (signal && signal.aborted && error.name && error.name === 'AbortError') {
+			debug('Ignore error after aborted request');
+			return;
+		}
+
 		debug(error);
+
 		if (error.code) {
 			switch (error.code) {
 				case 400:
@@ -107,4 +152,5 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional) {
 module.exports = {
 	getSpreadsheetClient,
 	getSheet,
+	getSheets,
 };
