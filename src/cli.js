@@ -1,5 +1,5 @@
 const program = require('commander');
-const { key } = require('../config'); // todo dont do this
+const { key } = require('../config');
 const SheetReader = require('./index');
 
 program

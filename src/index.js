@@ -30,7 +30,7 @@ function SheetReader(options) {
 			callback(null, data)
 		}).catch(error => {
 			callback(error)
-		});
+		})
 		return api
 	}
 	
