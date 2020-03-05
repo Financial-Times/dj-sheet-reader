@@ -1,4 +1,3 @@
-const createError = require('http-errors')
 const { build } = require('./builder')
 const { getSpreadsheetClient } = require('./sheets-api')
 
