@@ -20,13 +20,13 @@ const KEY = process.env.GOOGLE_SERVICE_KEY || process.env.GOOGLE_KEY || key;
 	try {
 		const options = {
 			columnKeys: 'legacy',
-		};
+		}
 	
 		const auth = {
 			key: KEY,
 			email: EMAIL,
 			subject: SUBJECT,
-		};
+		}
 
 		const spreadsheetId = program.spreadsheet;
 		const sheetNames = program.sheets.split(/,/g).map(s => s.trim()).filter(Boolean);
@@ -36,4 +36,4 @@ const KEY = process.env.GOOGLE_SERVICE_KEY || process.env.GOOGLE_KEY || key;
 	} catch (error) {
 		console.error(error);
 	}
-})();
+})()

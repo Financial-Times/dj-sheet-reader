@@ -1,37 +1,37 @@
-const set = require('lodash.set');
-const debug = require('debug')('prepare');
-const { sheet, sheetDetails } = require('./sheet');
+const set = require('lodash.set')
+const debug = require('debug')('prepare')
+const { sheet } = require('./sheet')
 
 function prepareSheetData(rawData) {
-	const { columns, rows } = sheet(rawData);
-	const numRows = rows.length;
+	const { columns, rows } = sheet(rawData)
+	const numRows = rows.length
 
 	if (!numRows) {
-		return rows;
+		return rows
 	}
 
-	const result = rows.map(() => ({}));
+	const result = rows.map(() => ({}))
 
 	for (let column of columns) {
 		for (let rowIndex = 0; rowIndex < numRows; rowIndex++) {
 			// todo: why are some empty string and others undefined
 			// todo: current impl has nulls for empty cells
-			const value = column.formatter(rows[rowIndex][column.index]);
-			const row = result[rowIndex];
-			set(row, column.key, value);
+			const value = column.formatter(rows[rowIndex][column.index])
+			const row = result[rowIndex]
+			set(row, column.key, value)
 		}
 	}
 
-	return result;
+	return result
 }
 
 function prepareSpreadsheetData(sheets, sheetsData) {
 
 	// shallow copy array to preserve order
 	// of the sheets (see note about sheet order below)
-	sheets = sheets.concat();
+	sheets = sheets.concat()
 
-	const result = {};
+	const result = {}
 
 	// _Bertha legacy compatibility #1:_
 	// Legacy behaviour
@@ -45,10 +45,10 @@ function prepareSpreadsheetData(sheets, sheetsData) {
 	// This helps to make the JSON output predictable and consistent
 	// Which is good for caching, etag creation etc.
 	sheets.forEach((sheet, index) => {
-		result[sheet.key] = sheetsData[index];
+		result[sheet.key] = sheetsData[index]
 	})
 
-	return result;
+	return result
 }
 
 module.exports = {
