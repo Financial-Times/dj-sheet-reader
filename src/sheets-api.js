@@ -1,12 +1,12 @@
-const { google } = require('googleapis');
-const createError = require('http-errors');
-const { FetchError } = require('node-fetch');
-const debug = require('debug')('sheetsAPI');
-const { Agent } = require('https');
-const AbortController = require('abort-controller');
-const pTimeout = require('p-timeout');
+const { google } = require('googleapis')
+const createError = require('http-errors')
+const { FetchError } = require('node-fetch')
+const debug = require('debug')('sheetsAPI')
+const { Agent } = require('https')
+const AbortController = require('abort-controller')
+const pTimeout = require('p-timeout')
 
-const agent = new Agent({ keepAlive: true, keepAliveMsecs: 1 });
+const agent = new Agent({ keepAlive: true, keepAliveMsecs: 1 })
 
 function getSpreadsheetClient(email, subject, key) {
 	try {		
@@ -20,30 +20,30 @@ function getSpreadsheetClient(email, subject, key) {
 				scopes: ['https://www.googleapis.com/auth/drive'],
 				subject: subject || SUBJECT,
 			})
-		});
+		})
 	} catch (error) {
-		debug(error);
-		throw error;
+		debug(error)
+		throw error
 	}
 }
 
 async function getSheets(client, spreadsheetId, sheets, transformSheet) {
 	if (!spreadsheetId) {
-		throw new new createError.BadRequest('spreadsheetId is required');
+		throw new new createError.BadRequest('spreadsheetId is required')
 	}
 
 	if (!sheets) {
-		throw new createError.BadRequest('sheetNames is required');
+		throw new createError.BadRequest('sheetNames is required')
 	}
 
-	const controller = new AbortController();
+	const controller = new AbortController()
 
 	try {
 		const timeout = 1000 * 19;
-		const timeoutError = new createError.RequestTimeout(`Google API timed out spreadsheetId=${spreadsheetId}`);
+		const timeoutError = new createError.RequestTimeout(`Google API timed out spreadsheetId=${spreadsheetId}`)
 		const promises = sheets.map(sheet => (
 			getSheet(client, spreadsheetId, sheet.sheetName, sheet.optional, controller.signal).then(transformSheet)
-		));
+		))
 		return await pTimeout(Promise.all(promises), timeout, timeoutError)
 	} catch(error) {
 		controller.abort()
@@ -64,10 +64,10 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 	const nodeFetchOptions = {
 		timeout: 1000 * 20,
 		agent,
-	};
+	}
 
 	if (signal) {
-		nodeFetchOptions.signal = signal;
+		nodeFetchOptions.signal = signal
 	}
 
 	try {
@@ -79,15 +79,15 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 		}, nodeFetchOptions)
 		const values = response.data.values || []
 		debug(`Response spreadsheetId=${spreadsheetId} sheetName=${sheetName} rowCount=${values.length}`)
-		return values;
+		return values
 	} catch (error) {
 
 		if (signal && signal.aborted && error.name && error.name === 'AbortError') {
-			debug('Ignore error after aborted request');
-			return;
+			debug('Ignore error after aborted request')
+			return
 		}
 
-		debug(error);
+		debug(error)
 
 		if (error.code) {
 			switch (error.code) {
@@ -115,13 +115,13 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 				case '400': // Error code is a string number!
 					if (error.response && error.response.data) {
 						if (error.response && error.response.status && (error.response.status === 500 || error.response.status === 400)) {
-							let message; 
+							let message
 							if (error.response.data.error === 'invalid_grant') {
 								message = `Google Auth: ${error.response.data.error_description}`
 							} else {
 								message = `4RS - ${error.response.data.error}: ${error.response.data.error_description}`;
 							}
-							throw new createError.InternalServerError(message);
+							throw new createError.InternalServerError(message)
 						}
 						throw new createError.InternalServerError(`NRS - ${error.response.data.error}: ${error.response.data.error_description}`)
 					}
@@ -135,17 +135,17 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 				case 'request-timeout':
 					if (isOptional) {
 						debug('Google API timeout on optional sheet - assume empty array')
-						return [];
+						return []
 					}
-					throw new createError.RequestTimeout(`Google API timed out spreadsheetId=${spreadsheetId} sheetName=${sheetName}`);
+					throw new createError.RequestTimeout(`Google API timed out spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
 				case 'system':
-					throw new createError.InternalServerError(`FetchError system error: ${error.message}`);
+					throw new createError.InternalServerError(`FetchError system error: ${error.message}`)
 				default:
 					break;
 			}
 		}
 
-		throw error;
+		throw error
 	}
 }
 
@@ -153,4 +153,4 @@ module.exports = {
 	getSpreadsheetClient,
 	getSheet,
 	getSheets,
-};
+}
