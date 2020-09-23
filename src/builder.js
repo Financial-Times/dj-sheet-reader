@@ -17,10 +17,7 @@ async function build(client, spreadsheetId, sheetNames, options) {
 		return prepareSpreadsheetData(sheets, sheetsData)
 	} catch (error) {
 		if (!error.statusCode) {
-			console.error(`Error: message=${error.message}`)
 			throw createError(500, error, { expose: true })
-		} else {
-			console.error(`Error: statusCode=${error.statusCode} message=${error.message}`)
 		}
 		throw error
 	}

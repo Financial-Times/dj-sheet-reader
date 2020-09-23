@@ -13,10 +13,10 @@ function getSpreadsheetClient(email, subject, key) {
 		return google.sheets({
 			version: 'v4',
 			auth: new google.auth.JWT({
-				email: email || EMAIL,
-				key: key || KEY,
+				email: email,
+				key: key,
 				scopes: ['https://www.googleapis.com/auth/drive'],
-				subject: subject || SUBJECT,
+				subject: subject,
 			})
 		})
 	} catch (error) {
@@ -27,7 +27,7 @@ function getSpreadsheetClient(email, subject, key) {
 
 async function getSheets(client, spreadsheetId, sheets, transformSheet) {
 	if (!spreadsheetId) {
-		throw new new createError.BadRequest('spreadsheetId is required')
+		throw new createError.BadRequest('spreadsheetId is required')
 	}
 
 	if (!sheets) {
