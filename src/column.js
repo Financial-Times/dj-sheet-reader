@@ -1,36 +1,62 @@
-const groupBy = require('lodash.groupby');
-const formatters = require('./formatters/all');
+const groupBy = require('lodash.groupby')
+const formatters = require('./formatters/all')
 
 function getFormatterFunction(name) {
 	if (name && formatters.hasOwnProperty(name) && typeof formatters[name] === 'function') {
-		return { formatter: formatters[name], formatterName: name };
+		return { formatter: formatters[name], formatterName: name }
 	}
-	return { formatter: formatters.basic, formatterName: 'basic' };
+	return { formatter: formatters.basic, formatterName: 'basic' }
 }
 
 function columnHeaderToObjectKey(header) {
-	return (header || '')
+	const key = (header || '')
+		.toString()
 		.trim()
 		.toLowerCase()
-		.replace(/[\s\-\_\n\r]/gm, '');
+		.replace(/[^a-z0-9\.]/gm, '')
+		.replace(/^\d+/, '') // remove leading digits
+		.replace(/^\.+/, '') // remove leading dots
+
+	if (key.startsWith('special.')) {
+		return key // don't remove trailing dots
+	}
+
+	return key.replace(/\.+$/, '') // remove trailing dots
+}
+
+function parseColumnHeader(value) {
+	const [title, formatter] = (value || '').toString().trim().split(/\.{2}(?=\w+$)/);
+	return [columnHeaderToObjectKey(title), formatter]
 }
 
 function column(value, index) {
-	const [title, _formatterName] = (value || '').trim().split('..');
-	const key = columnHeaderToObjectKey(title);
-	const { formatter, formatterName } = getFormatterFunction(_formatterName);
+
+	const [key, _formatterName] = parseColumnHeader(value)
+
+	if (!key) {
+		return
+	}
+
+	const isSpecial = key.startsWith('special.')
+	const isRestricted = key === 'special.restrict'
+
+	if (isSpecial && !isRestricted) {
+		return
+	}
+
+	const { formatter, formatterName } = getFormatterFunction(_formatterName)
+
 	return {
 		key,
 		index,
 		formatterName,
 		formatter,
-		isSpecial: key.startsWith('special.'),
-		isSpecialRestrict: key === 'special.restrict',
-	};
+		isRestricted,
+	}
 }
 
 function columns(row) {
-	const cols = row.map(column).filter(col => Boolean(col.key))
+	const cols = row.map(column).filter(Boolean)
 
 	// # Bertha legacy compatibility:
 	// Rename duplicate columns keys, adding a number to the key
@@ -48,7 +74,7 @@ function columns(row) {
 		})
 	})
 
-	return cols;
+	return cols
 }
 
 module.exports = {
@@ -56,4 +82,5 @@ module.exports = {
 	column,
 	columns,
 	getFormatterFunction,
+	parseColumnHeader,
 }

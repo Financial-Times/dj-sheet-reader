@@ -6,8 +6,8 @@ function prepareSheetData(rawData) {
 	const { columns, rows } = sheet(rawData)
 	const numRows = rows.length
 
-	if (!numRows) {
-		return rows
+	if (!numRows || !columns.length) {
+		return []
 	}
 
 	const result = rows.map(() => ({}))
