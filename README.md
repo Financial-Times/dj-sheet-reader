@@ -2,13 +2,23 @@
 
 ![Node.js CI](https://github.com/Financial-Times/dj-sheet-reader/workflows/Node.js%20CI/badge.svg)
 
-> Gets data from a google spreadsheet, transforms all the string values in cells to types and outputs the resturn as a simple object. Use inside the [Bertha service](https://github.com/ft-interactive/bertha).
+> Provides the core spreadsheet processing functionality inside [Bertha](https://github.com/ft-interactive/bertha).
+
+## What does it do?
+
+* Fetches data from a google spreadsheet
+* transforms all the cells values to types (eg booleans, numbers and arrays)
+* outputs the result as an object.
+
+[Bertha](https://github.com/ft-interactive/bertha) wraps this functionality into a service, providing also a cache and a background queue for that helps managing large spreadsheets and frequent edits.
 
 ## Installation
 
     $ npm install @financial-times/sheet-reader
 
 ## Usage
+
+First, you'll need a Google API Service Account email and key. A service account reads/writes data from the Google API on behalf Google user/email: this is known as the "subject" account.
 
 ```js
 
@@ -30,8 +40,6 @@ process.stdout.write(JSON.stringify(data));
 ```
 
 ## API
-
-You'll need a Google API Service Account to use this library. A service account reads/writes data from the Google API on behalf Google user/email: this is known as the "subject" account.
 
 **`SheetReader(options: object):SheetReaderInstance`**
 
