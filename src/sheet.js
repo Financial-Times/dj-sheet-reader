@@ -11,29 +11,36 @@ function sheet(rawData) {
 	const cols = columns(firstRow)
 	let rows
 	
-	const restrictRowCol = cols.findIndex(
-		col => col.isSpecialRestrict
+	const restrictRowColumns = cols.filter(
+		col => col.isRestricted
 	)
 
-	if (restrictRowCol === -1) {
-		rows = rawData
+	if (restrictRowColumns.length) {
+		// Loop through columns because we want to err on the side of safety
+		// in case there are 2 or more "special.restrict" columns on the sheet
+		for (let {index} of restrictRowColumns) {
+			rows = rawData.filter(
+				row => !isRestricted(row[index])
+			)
+		}
 	} else {
-		rows = rawData.filter(
-			row => !isRestricted(row[restrictRowCol])
-		)
+		rows = rawData
 	}
 
 	return {
 		rows,
-		columns: cols.filter(col => !col.isSpecial),
+		columns: cols.filter(col => !col.isRestricted),
 	}
 }
 
 function sheetKey(sheetName) {
-	return sheetName
+	if (sheetName === 0) return '0'
+	// todo: investigate: do we need to trim this string or remove chars
+	return (sheetName || '').toString()
 }
 
 function sheetDetails(sheetName) {
+	// todo: what if there's a leading space eg " +optional sheet"
 	const optional = sheetName.charAt(0) === '+';
 	sheetName = optional ? sheetName.substring(1) : sheetName;
 	const key = sheetKey(sheetName)
