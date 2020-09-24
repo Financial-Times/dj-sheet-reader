@@ -13,9 +13,8 @@ function columnHeaderToObjectKey(header) {
 		.toString()
 		.trim()
 		.toLowerCase()
-		.replace(/[^a-z0-9\.]/gm, '')
-		.replace(/^\d+/, '') // remove leading digits
-		.replace(/^\.+/, '') // remove leading dots
+		.replace(/[^a-z0-9\.\-]/gm, '')
+		.replace(/^[\d\.\-]+/, '') // remove leading digits and dots
 
 	if (key.startsWith('special.')) {
 		return key // don't remove trailing dots
