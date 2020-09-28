@@ -13,9 +13,8 @@ function columnHeaderToObjectKey(header) {
 		.toString()
 		.trim()
 		.toLowerCase()
-		.replace(/[^a-z0-9\.]/gm, '')
-		.replace(/^\d+/, '') // remove leading digits
-		.replace(/^\.+/, '') // remove leading dots
+		.replace(/[^a-z0-9\.\-]/gm, '')
+		.replace(/^[\d\.\-]+/, '') // remove leading digits and dots
 
 	if (key.startsWith('special.')) {
 		return key // don't remove trailing dots
@@ -66,6 +65,11 @@ function columns(row) {
 		if (cols.length < 2) {
 			return
 		}
+
+		if (cols[0].key.startsWith('special.')) {
+			return;
+		}
+
 		cols.slice(1).forEach((col, i) => {
 			// This only works because we assume column keys don't
 			// contain underscores. Otherwise we'd have to check
