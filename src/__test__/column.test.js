@@ -15,6 +15,8 @@ test.each([
 	[['', '', ''], []],
 	[['', null, '', null], []],
 	[['a', 'special.&', '', 'special.foo', 'special.restrict', '!&'], ['a', 'special.restrict']],
+	[['a', 'special.restrict', 'special.restrict'], ['a', 'special.restrict', 'special.restrict']],
+	[['a', 'special.foo', 'special.foo'], ['a']],
 ])('columns(%p) returns %p', (value, expected) => {
 	const result = columns(value);
 	const keys = result.map(c => c.key);
@@ -32,8 +34,6 @@ test('keeps special.restrict column', () => {
 	expect(keys).toHaveLength(result.length);
 	expect(keys).toEqual(expect.arrayContaining(['special.restrict']));
 });
-
-// todo: what happens when there are 2 "special.restrict" columns?
 
 test('remove "special." columns (except special.restrict)', () => {
 	const result = columns(['a', 'special.restrict', 'b', 'special.', 'special.&', '.special.']);
@@ -129,7 +129,11 @@ test.each([
 	['a...bool', 'a...bool'],
 	[' Foo Bar ', 'foobar'],
 	['FOO BAR', 'foobar'],
-	['foo-bar ', 'foobar'],
+	['foo-bar', 'foo-bar'],
+	['foo-bar  ', 'foo-bar'],
+	['foo-', 'foo-'],
+	['foo-  ', 'foo-'],
+	['-foo', 'foo'],
 	['foo_bar ', 'foobar'],
 	['fooBar', 'foobar'],
 	['foo\nBar', 'foobar'],
