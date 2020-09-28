@@ -1,4 +1,5 @@
 const { columns } = require('./column');
+const partition = require('lodash.partition');
 
 function isRestricted(raw) {
 	if (!raw) return false;
@@ -8,28 +9,30 @@ function isRestricted(raw) {
 function sheet(rawData) {
 
 	const firstRow = rawData.shift() || []
-	const cols = columns(firstRow)
-	let rows
-	
-	const restrictRowColumns = cols.filter(
-		col => col.isRestricted
-	)
+	const columnDescriptors = columns(firstRow)
+	const [restrictedColumns, unRestictedColumns] = partition(columnDescriptors, 'isRestricted')
 
-	if (restrictRowColumns.length) {
+	let rows = rawData
+
+	if (restrictedColumns.length) {
 		// Loop through columns because we want to err on the side of safety
 		// in case there are 2 or more "special.restrict" columns on the sheet
-		for (let {index} of restrictRowColumns) {
-			rows = rawData.filter(
+		for (let {index} of restrictedColumns) {
+			rows = rows.filter(
 				row => !isRestricted(row[index])
+			).map(
+				row => {
+					// remove the data in the restricted column cell
+					row[index] = undefined;
+					return row
+				}
 			)
 		}
-	} else {
-		rows = rawData
 	}
 
 	return {
 		rows,
-		columns: cols.filter(col => !col.isRestricted),
+		columns: unRestictedColumns,
 	}
 }
 
