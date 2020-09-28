@@ -4,5 +4,5 @@
 *.pem
 *.p12
 node_modules
-
+coverage
 config.js
