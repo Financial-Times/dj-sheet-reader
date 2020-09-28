@@ -14,7 +14,7 @@
     "abort-controller": "^3.0.0",
     "commander": "^4.1.1",
     "debug": "^4.1.1",
-    "googleapis": "^47.0.0",
+    "googleapis": "^60.0.1",
     "http-errors": "^1.7.3",
     "js-yaml": "^3.13.1",
     "lodash.groupby": "^4.6.0",
