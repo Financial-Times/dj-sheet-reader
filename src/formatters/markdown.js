@@ -16,5 +16,5 @@ module.exports = {
 	markdown,
 	markdownInline,
 	md: markdown,
-	mdi: this.markdownInline,	
+	mdi: markdownInline,	
 };
