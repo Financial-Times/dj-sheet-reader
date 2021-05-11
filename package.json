@@ -13,9 +13,9 @@
   "dependencies": {
     "abort-controller": "^3.0.0",
     "commander": "^4.1.1",
-    "debug": "^4.1.1",
+    "debug": "^4.3.2",
     "googleapis": "^60.0.1",
-    "http-errors": "^1.7.3",
+    "http-errors": "^1.8.0",
     "js-yaml": "^3.13.1",
     "lodash.groupby": "^4.6.0",
     "lodash.partition": "^4.6.0",
