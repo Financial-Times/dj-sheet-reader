@@ -12,20 +12,20 @@
   "homepage": "https://github.com/financial-times/dj-sheet-reader#readme",
   "dependencies": {
     "abort-controller": "^3.0.0",
-    "commander": "^4.1.1",
+    "commander": "^8.1.0",
     "debug": "^4.3.2",
-    "googleapis": "^60.0.1",
+    "googleapis": "^84.0.0",
     "http-errors": "^1.8.0",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^4.1.0",
     "lodash.groupby": "^4.6.0",
     "lodash.partition": "^4.6.0",
     "lodash.set": "^4.3.2",
-    "markdown-it": "^10.0.0",
-    "markdown-it-anchor": "^5.2.5",
+    "markdown-it": "^12.2.0",
+    "markdown-it-anchor": "^8.1.2",
     "moment": "^2.29.1",
-    "p-timeout": "^3.2.0"
+    "p-timeout": "^4.1.0"
   },
   "devDependencies": {
-    "jest": "^25.1.0"
+    "jest": "^27.0.6"
   }
 }
