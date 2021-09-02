@@ -9,7 +9,11 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        # Node.js Version 8.x
+        # Continue to test against this older version to make it easier to test
+        # Bertha regressions since the upgrade to the new Google APIs (Bertha was pinned to version 8 too)
+        # Note we still use Jest 25 for this reason.
+        node-version: [8.x, 12.x, 14.x, 16.x]
 
     steps:
     - uses: actions/checkout@v2
