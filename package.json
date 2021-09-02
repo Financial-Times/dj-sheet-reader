@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "bin": "src/cli.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --verbose=false",
+    "prettier": "prettier --write '**/*.{js,json}'"
   },
   "author": "",
   "license": "MIT",
@@ -26,6 +27,7 @@
     "p-timeout": "^4.1.0"
   },
   "devDependencies": {
-    "jest": "^27.0.6"
+    "jest": "^25.5.4",
+    "prettier": "^2.3.2"
   }
 }
