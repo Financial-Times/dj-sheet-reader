@@ -99,6 +99,11 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 					throw new createError.Forbidden(`No permission to access spreadsheet`)
 				case 404:
 					throw new createError.NotFound(`Spreadsheet not found: spreadsheetId=${spreadsheetId}`)
+				case 429:
+					if (Array.isArray(error.errors) && Boolean(error.errors.length)) {
+						debug(`${error.errors[0].reason}: ${error.errors[0].message}`)
+					} 
+					throw new createError.TooManyRequests(`Google spreadsheet API rate limit exceeded`)
 				case 'ETIMEDOUT':
 					throw new createError.RequestTimeout(`Network timed out`)
 				case 'ENOTFOUND':
