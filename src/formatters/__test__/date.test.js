@@ -1,4 +1,4 @@
-const { date, dateRange } = require('../date')
+const { date } = require('../date')
 
 test.each([null, undefined, 0, false, ''])('falsy value %p becomes null', (value) => {
 	expect(date(value)).toStrictEqual(null)

@@ -1,4 +1,4 @@
-const { columnHeaderToObjectKey, column, columns, getFormatterFunction } = require('../column')
+const { columnHeaderToObjectKey, column, columns } = require('../column')
 
 test.each([
 	[
@@ -58,6 +58,7 @@ test.each([
 	const keys = result.map((c) => c.key)
 	expect(keys).toStrictEqual(expected)
 })
+
 test('keeps correct index when removing invalid columns', () => {
 	const result = columns(['a', '', 'b', null, 'c', '_', 'd', 'special.', 'e', 'special.foo'])
 	const indexs = result.map((c) => c.index)

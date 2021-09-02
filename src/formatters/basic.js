@@ -7,7 +7,7 @@ function basic(val) {
 
 	let res
 	const bool = _bool(val)
-	const num = Number(val.replace(/\,/g, ''))
+	const num = Number(val.replace(/,/g, ''))
 
 	if (typeof val === 'string' && (val.length === 0 || val.toLowerCase() === 'null')) {
 		return null

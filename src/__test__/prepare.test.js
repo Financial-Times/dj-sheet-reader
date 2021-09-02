@@ -149,7 +149,7 @@ test('prepareSheetData with only a header row', () => {
 test('prepareSheetData with only a header row', () => {
 	const input = [['a'], ['1']]
 	const spy = jest.spyOn(formatters, 'basic')
-	const output = prepareSheetData(input)
+	prepareSheetData(input)
 	expect(spy).toHaveBeenCalledTimes(1)
 	expect(spy).toHaveBeenCalledWith('1')
 })

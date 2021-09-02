@@ -1,4 +1,3 @@
-const debug = require('debug')('builder')
 const createError = require('http-errors')
 const { prepareSheetData, prepareSpreadsheetData } = require('./prepare')
 const { sheetDetails } = require('./sheet')

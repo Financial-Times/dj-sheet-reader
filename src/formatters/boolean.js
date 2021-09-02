@@ -8,7 +8,9 @@ function _bool(val) {
 		} else if (/^(n|no|false)$/i.test(val)) {
 			bool = false
 		}
-	} catch (e) {}
+	} catch (e) {
+		// Do nothing. bool might be undefined. That's intended
+	}
 	return bool
 }
 

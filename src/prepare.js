@@ -1,5 +1,4 @@
 const set = require('lodash.set')
-const debug = require('debug')('prepare')
 const { sheet } = require('./sheet')
 
 function prepareSheetData(rawData) {

@@ -135,6 +135,7 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 							`NRS - ${error.response.data.error}: ${error.response.data.error_description}`,
 						)
 					}
+					break
 				default:
 					break
 			}

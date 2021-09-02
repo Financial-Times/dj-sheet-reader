@@ -39,13 +39,13 @@ function map(val) {
 
 	var obj = {}
 
-	var lines = list(val, /\r?\n/gm)
+	list(val, /\r?\n/gm)
 		.map(function (v) {
 			return list(
 				(v || '')
 					.toString()
-					.replace(/[\,\ \;]+$/, '')
-					.replace(/^[\ \t]+/, ''),
+					.replace(/[,; ]+$/, '')
+					.replace(/^[\t ]+/, ''),
 				':',
 			)
 		})

@@ -4,17 +4,17 @@ function link(cellContent) {
 	cellContent = cellContent || ''
 	var arr = array(cellContent),
 		links = []
-	arr.forEach(function (n, i) {
+	arr.forEach(function (n) {
 		if (!n) {
 			return
 		}
-		var pair = n.split(/\ +(?:(?=(?:\.{0,2}\/)+[\w\?\#][\w\/]+)|(?=[a-z]+\:\/\/\w+)|(?=(?:\?|\#)[\w\/%\+]+))/),
+		var pair = n.split(/ +(?:(?=(?:\.{0,2}\/)+[\w?#][\w/]+)|(?=[a-z]+:\/\/\w+)|(?=(?:\?|#)[\w/%+]+))/),
 			obj = {
 				text: pair[0],
 				href:
 					pair.length > 1
 						? pair[1]
-						: /^((?:\.{0,2}\/)+[\w\?\#][\w\/]+|[a-z]+\:\/\/\w+|(?:\?|\#)[\w\/%\+]+)/i.test(pair[0])
+						: /^((?:\.{0,2}\/)+[\w?#][\w/]+|[a-z]+:\/\/\w+|(?:\?|#)[\w/%+]+)/i.test(pair[0])
 						? pair[0]
 						: null,
 			}

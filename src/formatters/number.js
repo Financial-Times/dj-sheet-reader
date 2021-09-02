@@ -25,5 +25,4 @@ module.exports = {
 	dp1: getDecimalParser(1),
 	dp2: getDecimalParser(2),
 	dp3: getDecimalParser(3),
-	dp3: getDecimalParser(3),
 }

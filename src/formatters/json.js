@@ -12,7 +12,7 @@ function json(val) {
 			.replace(/[\n\r\t]/g, '')
 			.replace(/^\{/, '')
 			.replace(/\}$/, '')
-			.replace(/\,+$/, '')
+			.replace(/,+$/, '')
 		obj = JSON.parse('{' + sanitized + '}')
 	} catch (e) {
 		obj = basic(val)
