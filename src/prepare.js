@@ -18,6 +18,12 @@ function prepareSheetData(rawData) {
 			// todo: current impl has nulls for empty cells
 			const value = column.formatter(rows[rowIndex][column.index])
 			const row = result[rowIndex]
+
+
+			// FIXME: lodash.set creates an array, rather than an object
+			// 		when the key looks like an array index
+			//		I've tested other libraries similar to lodash.set
+			//		and none fixes this issue.
 			set(row, column.key, value)
 		}
 	}
