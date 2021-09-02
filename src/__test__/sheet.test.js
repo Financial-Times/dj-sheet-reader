@@ -1,9 +1,7 @@
-const { isRestricted, sheetKey, sheetDetails, sheet } = require('../sheet');
+const { isRestricted, sheetKey, sheetDetails, sheet } = require('../sheet')
 
 test('sheet with only one row', () => {
-	const rawData = [
-		['a', 'b']
-	]
+	const rawData = [['a', 'b']]
 	const result = sheet(rawData)
 	expect(result.columns).toHaveLength(2)
 	expect(result.columns).toHaveLength(2)
@@ -13,7 +11,7 @@ test('sheet with only one row', () => {
 test('sheet with two rows', () => {
 	const rawData = [
 		['a', 'b'],
-		['1', '1']
+		['1', '1'],
 	]
 	const result = sheet(rawData)
 	expect(result.columns).toHaveLength(2)
@@ -22,18 +20,14 @@ test('sheet with two rows', () => {
 })
 
 test('sheet one cell', () => {
-	const rawData = [
-		['a'],
-	]
+	const rawData = [['a']]
 	const result = sheet(rawData)
 	expect(result.columns).toHaveLength(1)
 	expect(result.rows).toHaveLength(0)
 })
 
 test('sheet one cell that is not a valid column name', () => {
-	const rawData = [
-		['111'],
-	]
+	const rawData = [['111']]
 	const result = sheet(rawData)
 	expect(result.columns).toHaveLength(0)
 	expect(result.rows).toHaveLength(0)
@@ -53,7 +47,7 @@ test('sheet with sparse header row', () => {
 })
 
 test('empty sheet', () => {
-	expect(sheet([])).toStrictEqual({columns:[], rows: []})
+	expect(sheet([])).toStrictEqual({ columns: [], rows: [] })
 })
 
 test('sheet with special.restrict column has data filtered out', () => {
@@ -108,15 +102,15 @@ test('sheet with special column has columns filtered out, but values remain', ()
 test('When there are two special.restrict columns, both are used', () => {
 	const rawData = [
 		['special.restrict', 'heading', 'special.restrict'],
-		['no',	'A', ''],
-		['no',	'B', 'no'],
-		['', 		'C', ''],
+		['no', 'A', ''],
+		['no', 'B', 'no'],
+		['', 'C', ''],
 		['some string', 'D', ''],
-		['yes',	'E', 'yes'],
-		['yes',	'F', ''],
-		['',		'G', 'yes'],
-		['no',	'H', 'yes'],
-		['some string',	'I', 'yes'],
+		['yes', 'E', 'yes'],
+		['yes', 'F', ''],
+		['', 'G', 'yes'],
+		['no', 'H', 'yes'],
+		['some string', 'I', 'yes'],
 	]
 	const result = sheet(rawData)
 
@@ -166,21 +160,20 @@ test.each([
 	expect(sheetDetails(value).optional).toStrictEqual(expected)
 })
 
-test.each([
-	null, undefined, '', '   ', 'false', 'no', 'NO', 'N', 'n', ' n ', '0', 0, 'foo bar'
-])('is not restricted when cell value is %p', (value) => {
-	expect(isRestricted(value)).toBe(false);
-});
+test.each([null, undefined, '', '   ', 'false', 'no', 'NO', 'N', 'n', ' n ', '0', 0, 'foo bar'])(
+	'is not restricted when cell value is %p',
+	(value) => {
+		expect(isRestricted(value)).toBe(false)
+	},
+)
 
-test.each([
-	'TRUE', ' true ', ' Y', ' YES ', ' ok ', ' on ', 'oN'
-])('restricted when cell value is %p', (value) => {
-	expect(isRestricted(value)).toBe(true);
-});
+test.each(['TRUE', ' true ', ' Y', ' YES ', ' ok ', ' on ', 'oN'])('restricted when cell value is %p', (value) => {
+	expect(isRestricted(value)).toBe(true)
+})
 
 test('not restricted when no args', () => {
-	expect(isRestricted()).toBe(false);
-});
+	expect(isRestricted()).toBe(false)
+})
 
 test.each([
 	['a', 'a'],
@@ -191,9 +184,9 @@ test.each([
 	[null, ''],
 	[undefined, ''],
 ])('sheetKey(%p) === %p', (value, expected) => {
-	expect(sheetKey(value)).toStrictEqual(expected);
-});
+	expect(sheetKey(value)).toStrictEqual(expected)
+})
 
 test('sheetKey empty string when no args', () => {
-	expect(sheetKey()).toStrictEqual('');
-});
+	expect(sheetKey()).toStrictEqual('')
+})

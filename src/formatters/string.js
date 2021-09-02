@@ -1,5 +1,5 @@
 function str(val) {
-	return (val || '').toString();
+	return (val || '').toString()
 }
 
 module.exports = {

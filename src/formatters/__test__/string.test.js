@@ -1,4 +1,4 @@
-const { str, string } = require('../string');
+const { str, string } = require('../string')
 
 test.each([
 	[null, ''],
@@ -10,10 +10,10 @@ test.each([
 	[true, 'true'],
 	[false, ''], // todo: legacy behavior: not correct, should be "false"
 ])('%p is a string %p', (value, expected) => {
-	expect(str(value)).toStrictEqual(expected);
+	expect(str(value)).toStrictEqual(expected)
 	// todo: expect(str(value)).toBe(a string);
-});
+})
 
 test('str is alias of string', () => {
-	expect(str).toStrictEqual(string);
-});
+	expect(str).toStrictEqual(string)
+})

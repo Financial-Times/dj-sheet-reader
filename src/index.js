@@ -2,7 +2,9 @@ const { build } = require('./builder')
 const { getSpreadsheetClient } = require('./sheets-api')
 
 function SheetReader(options) {
-	const { auth: {email, subject, key} } = options
+	const {
+		auth: { email, subject, key },
+	} = options
 	let client
 
 	const api = {
@@ -26,14 +28,16 @@ function SheetReader(options) {
 
 	// Helper for legacy compatibility
 	function fetchSheetWithCallback(spreadsheetId, sheetNames, options, callback) {
-		fetchSheet(spreadsheetId, sheetNames, options).then(data => {
-			callback(null, data)
-		}).catch(error => {
-			callback(error)
-		})
+		fetchSheet(spreadsheetId, sheetNames, options)
+			.then((data) => {
+				callback(null, data)
+			})
+			.catch((error) => {
+				callback(error)
+			})
 		return api
 	}
-	
+
 	return api
 }
 

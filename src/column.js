@@ -24,12 +24,14 @@ function columnHeaderToObjectKey(header) {
 }
 
 function parseColumnHeader(value) {
-	const [title, formatter] = (value || '').toString().trim().split(/\.{2}(?=\w+$)/);
+	const [title, formatter] = (value || '')
+		.toString()
+		.trim()
+		.split(/\.{2}(?=\w+$)/)
 	return [columnHeaderToObjectKey(title), formatter]
 }
 
 function column(value, index) {
-
 	const [key, _formatterName] = parseColumnHeader(value)
 
 	if (!key) {
@@ -67,14 +69,14 @@ function columns(row) {
 		}
 
 		if (cols[0].key.startsWith('special.')) {
-			return;
+			return
 		}
 
 		cols.slice(1).forEach((col, i) => {
 			// This only works because we assume column keys don't
 			// contain underscores. Otherwise we'd have to check
 			// the new suffixed key isn't already in use on another column.
-			col.key = `${col.key}_${i + 2}`;
+			col.key = `${col.key}_${i + 2}`
 		})
 	})
 

@@ -1,149 +1,167 @@
-const { prepareSheetData, prepareSpreadsheetData } = require('../prepare');
+const { prepareSheetData, prepareSpreadsheetData } = require('../prepare')
 // jest.mock('../formatters/all');
-const formatters = require('../formatters/all');
+const formatters = require('../formatters/all')
 
 test.each([
 	[
-		[ //in
+		[
+			//in
 			['a'],
 			['1'],
 		],
-		[ // out
-			{a: 1}
-		]
+		[
+			// out
+			{ a: 1 },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['a', 'b'],
 			['1', 'a string'],
 			['another string', null],
 		],
-		[ // out
-			{a: 1, b: 'a string'},
-			{a: 'another string', b: null},
-		]
+		[
+			// out
+			{ a: 1, b: 'a string' },
+			{ a: 'another string', b: null },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['a.b', 'a.c.d'],
 			['1', 'a string'],
 		],
-		[ // out
-			{a: {b: 1, c: {d: 'a string'}}},
-		]
+		[
+			// out
+			{ a: { b: 1, c: { d: 'a string' } } },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['a', 'a.b'],
-			['A', 'A.B']
+			['A', 'A.B'],
 		],
-		[ // out
-			{a: {b: 'A.B'}}
-		]
+		[
+			// out
+			{ a: { b: 'A.B' } },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['a.b', 'a'],
-			['A.B', 'A']
+			['A.B', 'A'],
 		],
-		[ // out
-			{a: 'A'}
-		]
+		[
+			// out
+			{ a: 'A' },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['a', 'a'],
-			['A1', 'A2']
+			['A1', 'A2'],
 		],
-		[ // out
-			{a: 'A1', a_2: 'A2'}
-		]
+		[
+			// out
+			{ a: 'A1', a_2: 'A2' },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['a', 'a', 'a.b'],
 			['A1', 'A2', 'A.B'],
 		],
-		[ // out
-			{a_2: 'A2', a:{b: 'A.B'}}
-		]
+		[
+			// out
+			{ a_2: 'A2', a: { b: 'A.B' } },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['', 'a'],
-			['1', '2']
+			['1', '2'],
 		],
-		[ // out
-			{a: 2}
-		]
+		[
+			// out
+			{ a: 2 },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['a', '_', 'b', '!', 'c', 'special.@'],
-			['A', '_', 'B', '!', 'C', '@']
+			['A', '_', 'B', '!', 'C', '@'],
 		],
-		[ // out
-			{ a: 'A', b: 'B', c: 'C' }
-		]
+		[
+			// out
+			{ a: 'A', b: 'B', c: 'C' },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['!-a-!', 'b'],
-			['A', 'B']
+			['A', 'B'],
 		],
-		[ // out
-			{ 'a-': 'A', b: 'B' }
-		]
+		[
+			// out
+			{ 'a-': 'A', b: 'B' },
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			[''],
-			['']
+			[''],
 		],
-		[/* out: empty array */],
+		[
+			/* out: empty array */
+		],
 	],
 	[
-		[ // in
+		[
+			// in
 			['', '-'],
 			['A', 'B'],
 		],
-		[/* out: empty array */]
-	]
+		[
+			/* out: empty array */
+		],
+	],
 ])('prepareSheetData test %#: columns(%j) returns %p', (input, expected) => {
 	const output = prepareSheetData(input)
-	expect(output).toStrictEqual(expected);
-});
+	expect(output).toStrictEqual(expected)
+})
 
 test('prepareSheetData with only a header row', () => {
-	const input = [
-		['a', 'b', 'c'],
-	]
+	const input = [['a', 'b', 'c']]
 	const output = prepareSheetData(input)
-	expect(output).toStrictEqual([]);
-});
-
+	expect(output).toStrictEqual([])
+})
 
 test('prepareSheetData with only a header row', () => {
-	const input = [
-		['a'],
-		['1']
-	]
+	const input = [['a'], ['1']]
 	const spy = jest.spyOn(formatters, 'basic')
-	const output = prepareSheetData(input);
-	expect(spy).toHaveBeenCalledTimes(1);
-	expect(spy).toHaveBeenCalledWith('1');
-});
-
-
+	const output = prepareSheetData(input)
+	expect(spy).toHaveBeenCalledTimes(1)
+	expect(spy).toHaveBeenCalledWith('1')
+})
 
 test('prepareSheetData with empty sheet', () => {
-	expect(prepareSheetData([])).toStrictEqual([]);
-});
+	expect(prepareSheetData([])).toStrictEqual([])
+})
 
 test('prepareSheetData with no args', () => {
-	expect(prepareSheetData).toThrow();
-});
+	expect(prepareSheetData).toThrow()
+})
 
 test('prepareSheetData with no args', () => {
-	expect(prepareSpreadsheetData).toThrow();
-});
+	expect(prepareSpreadsheetData).toThrow()
+})

@@ -1,11 +1,10 @@
 const debug = require('debug')('builder')
 const createError = require('http-errors')
-const { prepareSheetData, prepareSpreadsheetData, } = require('./prepare')
+const { prepareSheetData, prepareSpreadsheetData } = require('./prepare')
 const { sheetDetails } = require('./sheet')
 const { getSheets } = require('./sheets-api')
 
 async function build(client, spreadsheetId, sheetNames, options) {
-
 	const opts = {
 		columnKeys: 'legacy',
 		...options,

@@ -9,7 +9,7 @@ const pTimeout = require('p-timeout')
 const agent = new Agent({ keepAlive: true, keepAliveMsecs: 1 })
 
 function getSpreadsheetClient(email, subject, key) {
-	try {		
+	try {
 		return google.sheets({
 			version: 'v4',
 			auth: new google.auth.JWT({
@@ -17,7 +17,7 @@ function getSpreadsheetClient(email, subject, key) {
 				key: key,
 				scopes: ['https://www.googleapis.com/auth/drive'],
 				subject: subject,
-			})
+			}),
 		})
 	} catch (error) {
 		debug(error)
@@ -37,20 +37,19 @@ async function getSheets(client, spreadsheetId, sheets, transformSheet) {
 	const controller = new AbortController()
 
 	try {
-		const timeout = 1000 * 19;
+		const timeout = 1000 * 19
 		const timeoutError = new createError.RequestTimeout(`Google API timed out spreadsheetId=${spreadsheetId}`)
-		const promises = sheets.map(sheet => (
-			getSheet(client, spreadsheetId, sheet.sheetName, sheet.optional, controller.signal).then(transformSheet)
-		))
+		const promises = sheets.map((sheet) =>
+			getSheet(client, spreadsheetId, sheet.sheetName, sheet.optional, controller.signal).then(transformSheet),
+		)
 		return await pTimeout(Promise.all(promises), timeout, timeoutError)
-	} catch(error) {
+	} catch (error) {
 		controller.abort()
 		throw error
 	}
 }
 
 async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
-
 	if (!spreadsheetId) {
 		throw new createError.BadRequest('Spreadsheet ID required')
 	}
@@ -69,18 +68,20 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 	}
 
 	try {
-
 		debug(`Request spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
-		const { data: { values } } = await client.spreadsheets.values.get({
-			spreadsheetId,
-			range: sheetName,
-			majorDimension: 'ROWS',
-		}, nodeFetchOptions)
+		const {
+			data: { values },
+		} = await client.spreadsheets.values.get(
+			{
+				spreadsheetId,
+				range: sheetName,
+				majorDimension: 'ROWS',
+			},
+			nodeFetchOptions,
+		)
 		debug(`Response spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
 		return values || []
-
 	} catch (error) {
-
 		if (signal && signal.aborted && error.name && error.name === 'AbortError') {
 			debug('Ignore error after aborted request')
 			return
@@ -91,9 +92,13 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 		if (error.code) {
 			switch (error.code) {
 				case 400:
-					if (Array.isArray(error.errors) && Boolean(error.errors.length) && error.errors[0].message === `Unable to parse range: ${sheetName}`) {
+					if (
+						Array.isArray(error.errors) &&
+						Boolean(error.errors.length) &&
+						error.errors[0].message === `Unable to parse range: ${sheetName}`
+					) {
 						throw new createError.NotFound(`Sheet not found: sheetName="${sheetName}"`)
-					} 
+					}
 					throw new createError.BadRequest('Bad Request [possibly invalid spreadsheet ID]')
 				case 403:
 					throw new createError.Forbidden(`No permission to access spreadsheet`)
@@ -113,19 +118,25 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 					throw new createError.InternalServerError('Internal error - AUTHX')
 				case '400': // Error code is a string number!
 					if (error.response && error.response.data) {
-						if (error.response && error.response.status && (error.response.status === 500 || error.response.status === 400)) {
+						if (
+							error.response &&
+							error.response.status &&
+							(error.response.status === 500 || error.response.status === 400)
+						) {
 							let message
 							if (error.response.data.error === 'invalid_grant') {
 								message = `Google Auth: ${error.response.data.error_description}`
 							} else {
-								message = `4RS - ${error.response.data.error}: ${error.response.data.error_description}`;
+								message = `4RS - ${error.response.data.error}: ${error.response.data.error_description}`
 							}
 							throw new createError.InternalServerError(message)
 						}
-						throw new createError.InternalServerError(`NRS - ${error.response.data.error}: ${error.response.data.error_description}`)
+						throw new createError.InternalServerError(
+							`NRS - ${error.response.data.error}: ${error.response.data.error_description}`,
+						)
 					}
 				default:
-					break;
+					break
 			}
 		}
 
@@ -136,11 +147,13 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 						debug('Google API timeout on optional sheet - assume empty array')
 						return []
 					}
-					throw new createError.RequestTimeout(`Google API timed out spreadsheetId=${spreadsheetId} sheetName=${sheetName}`)
+					throw new createError.RequestTimeout(
+						`Google API timed out spreadsheetId=${spreadsheetId} sheetName=${sheetName}`,
+					)
 				case 'system':
 					throw new createError.InternalServerError(`FetchError system error: ${error.message}`)
 				default:
-					break;
+					break
 			}
 		}
 
