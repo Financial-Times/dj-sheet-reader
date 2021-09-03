@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.0...v1.0.1) (2021-09-03)
+
+
+### Bug Fixes
+
+* eslint errors ([4803cf8](https://github.com/Financial-Times/dj-sheet-reader/commit/4803cf8a1390945d14ac72014e4498470573ae26))
+
 # 1.0.0 (2021-09-03)
 
 
