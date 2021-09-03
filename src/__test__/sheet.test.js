@@ -84,7 +84,7 @@ test('sheet with special column has columns filtered out, but values remain', ()
 	expect(result.rows[0]).toHaveLength(2)
 })
 
-test('sheet with special column has columns filtered out, but values remain', () => {
+test('sheet with special.restrict column and special column has columns filtered out, but values remain', () => {
 	const rawData = [
 		['heading', 'special.something', 'special.restrict'],
 		['A', 'Row 1', ''],

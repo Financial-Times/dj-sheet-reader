@@ -24,7 +24,13 @@ function prepareSheetData(rawData) {
 	return result
 }
 
-function prepareSpreadsheetData(sheets, sheetsData) {
+function prepareSpreadsheetData(sheets, sheetsData, options) {
+	options = options || {}
+
+	if (options.columnKeys) {
+		// todo: needs implementing
+	}
+
 	// shallow copy array to preserve order
 	// of the sheets (see note about sheet order below)
 	sheets = sheets.concat()
