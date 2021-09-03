@@ -146,7 +146,7 @@ test('prepareSheetData with only a header row', () => {
 	expect(output).toStrictEqual([])
 })
 
-test('prepareSheetData with only a header row', () => {
+test('prepareSheetData with a header row and single cell', () => {
 	const input = [['a'], ['1']]
 	const spy = jest.spyOn(formatters, 'basic')
 	prepareSheetData(input)
@@ -162,6 +162,6 @@ test('prepareSheetData with no args', () => {
 	expect(prepareSheetData).toThrow()
 })
 
-test('prepareSheetData with no args', () => {
+test('prepareSpreadsheetData with no args', () => {
 	expect(prepareSpreadsheetData).toThrow()
 })

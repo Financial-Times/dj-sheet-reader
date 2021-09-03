@@ -3,7 +3,7 @@ const createError = require('http-errors')
 const { FetchError } = require('node-fetch')
 const debug = require('debug')('sheetsAPI')
 const { Agent } = require('https')
-const AbortController = require('abort-controller')
+const { AbortController } = require('abort-controller')
 const pTimeout = require('p-timeout')
 
 const agent = new Agent({ keepAlive: true, keepAliveMsecs: 1 })
@@ -107,7 +107,7 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 				case 429:
 					if (Array.isArray(error.errors) && Boolean(error.errors.length)) {
 						debug(`${error.errors[0].reason}: ${error.errors[0].message}`)
-					} 
+					}
 					throw new createError.TooManyRequests(`Google spreadsheet API rate limit exceeded`)
 				case 'ETIMEDOUT':
 					throw new createError.RequestTimeout(`Network timed out`)

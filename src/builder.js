@@ -12,7 +12,7 @@ async function build(client, spreadsheetId, sheetNames, options) {
 	try {
 		const sheets = sheetNames.map(sheetDetails)
 		const sheetsData = await getSheets(client, spreadsheetId, sheets, prepareSheetData)
-		return prepareSpreadsheetData(sheets, sheetsData)
+		return prepareSpreadsheetData(sheets, sheetsData, opts)
 	} catch (error) {
 		if (!error.statusCode) {
 			throw createError(500, error, { expose: true })

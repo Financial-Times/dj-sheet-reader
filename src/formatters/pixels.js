@@ -1,5 +1,5 @@
 function pixels(val) {
-	return (types.str(val) || 0) + 'px'
+	return ((val || '').toString() || 0) + 'px'
 }
 
 module.exports = {

@@ -1,4 +1,4 @@
-const jsYaml = require('js-yaml')
+const { load, JSON_SCHEMA } = require('js-yaml')
 
 function yaml(val) {
 	if (!val) return val
@@ -6,7 +6,7 @@ function yaml(val) {
 	val = val.trim()
 
 	try {
-		return jsYaml.safeLoad(val, { schema: jsYaml.JSON_SCHEMA })
+		return load(val, { schema: JSON_SCHEMA })
 	} catch (e) {
 		return { value: val, error: { message: 'YAML format error', line: e.line, column: e.column } }
 	}

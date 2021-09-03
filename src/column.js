@@ -2,7 +2,7 @@ const groupBy = require('lodash.groupby')
 const formatters = require('./formatters/all')
 
 function getFormatterFunction(name) {
-	if (name && formatters.hasOwnProperty(name) && typeof formatters[name] === 'function') {
+	if (name && Object.prototype.hasOwnProperty.call(formatters, name) && typeof formatters[name] === 'function') {
 		return { formatter: formatters[name], formatterName: name }
 	}
 	return { formatter: formatters.basic, formatterName: 'basic' }
