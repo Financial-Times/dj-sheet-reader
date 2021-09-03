@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "bin": "src/cli.js",
   "scripts": {
+    "prepare": "husky install",
     "test": "jest --verbose=false",
     "eslint": "eslint . --ext .js --fix",
     "prettier": "prettier --write '**/*.{js,json}'"
@@ -39,6 +40,7 @@
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-jest-formatting": "^3.0.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.0",
     "jest": "^25.5.4",
     "lint-staged": "^11.1.2",
     "prettier": "^2.3.2"
