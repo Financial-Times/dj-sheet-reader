@@ -1,25 +1,26 @@
-const { basic } = require('./basic');
+const { basic } = require('./basic')
 
 function json(val) {
-
 	if (!val || !val.length) {
-		return null;
+		return null
 	}
 
-	let obj = {};
+	let obj = {}
 
 	try {
-		const sanitized = (val || '').replace(/[\n\r\t]/g, '')
+		const sanitized = (val || '')
+			.replace(/[\n\r\t]/g, '')
 			.replace(/^\{/, '')
-			.replace(/\}$/, '').replace(/\,+$/, '');
-		obj = JSON.parse('{' + sanitized + '}');
+			.replace(/\}$/, '')
+			.replace(/,+$/, '')
+		obj = JSON.parse('{' + sanitized + '}')
 	} catch (e) {
-		obj = basic(val);
+		obj = basic(val)
 	}
 
-	return obj;
+	return obj
 }
 
 module.exports = {
 	json,
-};
+}

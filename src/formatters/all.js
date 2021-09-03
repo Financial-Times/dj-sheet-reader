@@ -11,4 +11,4 @@ module.exports = {
 	...require('./pixels'),
 	...require('./string'),
 	...require('./yaml'),
-};
+}

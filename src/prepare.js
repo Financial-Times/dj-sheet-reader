@@ -1,5 +1,4 @@
 const set = require('lodash.set')
-const debug = require('debug')('prepare')
 const { sheet } = require('./sheet')
 
 function prepareSheetData(rawData) {
@@ -26,7 +25,6 @@ function prepareSheetData(rawData) {
 }
 
 function prepareSpreadsheetData(sheets, sheetsData) {
-
 	// shallow copy array to preserve order
 	// of the sheets (see note about sheet order below)
 	sheets = sheets.concat()
@@ -38,7 +36,7 @@ function prepareSpreadsheetData(sheets, sheetsData) {
 	// 1. An optional sheet that exists, but has zero rows, produces and empty array
 	// 2. An optional sheet that does not exist produces undefined
 	// New behaviour
-	// It's not possible to replicate the legacy behaviour so the new way is (1) in all cases - empty array. 
+	// It's not possible to replicate the legacy behaviour so the new way is (1) in all cases - empty array.
 
 	// _Bertha legacy compatibility #2:_
 	// Object props are declared in the order sheetNames were specified.

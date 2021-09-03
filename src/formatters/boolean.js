@@ -1,33 +1,35 @@
 // function use internally by other formatters (can return non-boolean values)
 function _bool(val) {
-	let bool;
+	let bool
 	try {
-		val = (val || '').trim();
+		val = (val || '').trim()
 		if (/^(y|yes|true)$/i.test(val)) {
-			bool = true;
+			bool = true
 		} else if (/^(n|no|false)$/i.test(val)) {
-			bool = false;
+			bool = false
 		}
-	} catch (e) { }
-	return bool;
+	} catch (e) {
+		// Do nothing. bool might be undefined. That's intended
+	}
+	return bool
 }
 
 // the function reference in spreadsheet. Must return a boolean value
 function bool(val) {
 	if (typeof val === 'boolean') {
-		return val;
+		return val
 	}
 	if (val === 0) {
-		return false;
+		return false
 	}
 	if (val === 1) {
-		return true;
+		return true
 	}
-	return _bool(val) || false;
+	return _bool(val) || false
 }
 
 module.exports = {
 	bool,
 	boolean: bool,
 	_bool,
-};
+}

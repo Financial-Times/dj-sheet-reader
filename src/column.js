@@ -13,8 +13,8 @@ function columnHeaderToObjectKey(header) {
 		.toString()
 		.trim()
 		.toLowerCase()
-		.replace(/[^a-z0-9\.\-]/gm, '')
-		.replace(/^[\d\.\-]+/, '') // remove leading digits and dots
+		.replace(/[^a-z0-9.-]/gm, '')
+		.replace(/^[\d.-]+/, '') // remove leading digits and dots
 
 	if (key.startsWith('special.')) {
 		return key // don't remove trailing dots
@@ -24,12 +24,14 @@ function columnHeaderToObjectKey(header) {
 }
 
 function parseColumnHeader(value) {
-	const [title, formatter] = (value || '').toString().trim().split(/\.{2}(?=\w+$)/);
+	const [title, formatter] = (value || '')
+		.toString()
+		.trim()
+		.split(/\.{2}(?=\w+$)/)
 	return [columnHeaderToObjectKey(title), formatter]
 }
 
 function column(value, index) {
-
 	const [key, _formatterName] = parseColumnHeader(value)
 
 	if (!key) {
@@ -61,20 +63,20 @@ function columns(row) {
 	// Rename duplicate columns keys, adding a number to the key
 	// e.g if two cols are called "foo", the second (moving left-to-right in the sheet) would be "foo_2"
 	// this includes columns with namespaces: the second "foo.bar" would become "foo.bar_2"
-	const groupedByKey = Object.entries(groupBy(cols, 'key')).forEach(([key, cols]) => {
+	Object.entries(groupBy(cols, 'key')).forEach(([, cols]) => {
 		if (cols.length < 2) {
 			return
 		}
 
 		if (cols[0].key.startsWith('special.')) {
-			return;
+			return
 		}
 
 		cols.slice(1).forEach((col, i) => {
 			// This only works because we assume column keys don't
 			// contain underscores. Otherwise we'd have to check
 			// the new suffixed key isn't already in use on another column.
-			col.key = `${col.key}_${i + 2}`;
+			col.key = `${col.key}_${i + 2}`
 		})
 	})
 

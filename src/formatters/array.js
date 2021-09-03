@@ -1,55 +1,65 @@
-const { basic } = require('./basic');
+const { basic } = require('./basic')
 
 function list(val, delimiter) {
-	val = (val || '').trim();
-	return !val.length ? [] : val.toString().split(delimiter || ',').map(basic);
+	val = (val || '').trim()
+	return !val.length
+		? []
+		: val
+				.toString()
+				.split(delimiter || ',')
+				.map(basic)
 }
 
 function array(val) {
-	return list(val, /[\r\n]+/gm);
+	return list(val, /[\r\n]+/gm)
 }
 
 function wrapParse(d) {
 	return function (val) {
-		return list(val, d);
+		return list(val, d)
 	}
 }
 
 function parse2d(val, delimiter1, delimiter2) {
-	return list(val, delimiter1 || /\r?\n/gm).map(wrapParse(delimiter2 || ','));
+	return list(val, delimiter1 || /\r?\n/gm).map(wrapParse(delimiter2 || ','))
 }
 
 function md2(val) {
-	return parse2d(val);
+	return parse2d(val)
 }
 
 function md2semi(val) {
-	return parse2d(val, null, ';');
+	return parse2d(val, null, ';')
 }
 
 function map(val) {
-
 	if (!val || !val.length) {
-		return null;
+		return null
 	}
 
-	var obj = {};
+	var obj = {}
 
-	var lines = list(val, /\r?\n/gm)
+	list(val, /\r?\n/gm)
 		.map(function (v) {
-			return list((v || '').toString().replace(/[\,\ \;]+$/, '').replace(/^[\ \t]+/, ''), ':');
+			return list(
+				(v || '')
+					.toString()
+					.replace(/[,; ]+$/, '')
+					.replace(/^[\t ]+/, ''),
+				':',
+			)
 		})
 		.forEach(function (arr) {
 			if (arr && arr.length) {
 				if (arr.length > 1) {
-					obj[arr[0]] = arr[1];
+					obj[arr[0]] = arr[1]
 				} else {
-					obj[arr[0]] = null;
+					obj[arr[0]] = null
 				}
 			}
-		});
+		})
 
-	return obj;
+	return obj
 }
 
 module.exports = {
@@ -57,7 +67,7 @@ module.exports = {
 	li: list,
 	array,
 	arr: array,
-	md2,			// TODO: Confirm if used. Deprecate
-	md2semi,	// TODO: Confirm if used. Deprecate
-	map,			// TODO: Confirm if used. Deprecate
-};
+	md2, // TODO: Confirm if used. Deprecate
+	md2semi, // TODO: Confirm if used. Deprecate
+	map, // TODO: Confirm if used. Deprecate
+}

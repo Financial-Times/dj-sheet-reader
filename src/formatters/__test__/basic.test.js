@@ -1,4 +1,4 @@
-const { basic } = require('../basic');
+const { basic } = require('../basic')
 
 test.each([
 	['100', 100],
@@ -9,8 +9,8 @@ test.each([
 	['1,000,000', 1000000],
 	['1,000,000.99', 1000000.99],
 ])('number string %p to number %p', (value, expected) => {
-	expect(basic(value)).toStrictEqual(expected);
-});
+	expect(basic(value)).toStrictEqual(expected)
+})
 
 test.each([
 	['foo', 'foo'],
@@ -22,29 +22,29 @@ test.each([
 	['0,foo', '0,foo'],
 	['0.foo', '0.foo'],
 ])('trims string value %p', (value, expected) => {
-	expect(basic(value)).toStrictEqual(expected);
-});
+	expect(basic(value)).toStrictEqual(expected)
+})
 
 test.each(['y', 'yes', 'true', 'Y', 'YES', 'TRUE', ' yEs', ' tRuE '])('converts %p to boolean true', (value) => {
-	expect(basic(value)).toStrictEqual(true);
-});
+	expect(basic(value)).toStrictEqual(true)
+})
 
 test.each(['n', 'no', 'false', 'N', 'NO', 'FALSE', ' No', ' fAlsE '])('converts %p to boolean false', (value) => {
-	expect(basic(value)).toStrictEqual(false);
-});
+	expect(basic(value)).toStrictEqual(false)
+})
 
 test('with no args', () => {
-	expect(basic()).toBeNull();
-});
+	expect(basic()).toBeNull()
+})
 
 test('empty string', () => {
-	expect(basic('')).toBeNull();
-});
+	expect(basic('')).toBeNull()
+})
 
 test('"null" string', () => {
-	expect(basic('null')).toBeNull();
-});
+	expect(basic('null')).toBeNull()
+})
 
 test('whitespace string', () => {
-	expect(basic('    ')).toBeNull();
-});
+	expect(basic('    ')).toBeNull()
+})
