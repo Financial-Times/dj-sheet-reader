@@ -31,7 +31,7 @@
     "markdown-it-anchor": "^8.1.2",
     "moment": "^2.29.1",
     "p-timeout": "^4.1.0",
-    "set-value": "^4.0.0"
+    "set-value": "^4.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
