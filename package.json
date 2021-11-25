@@ -16,7 +16,7 @@
   "homepage": "https://github.com/financial-times/dj-sheet-reader#readme",
   "dependencies": {
     "abort-controller": "^3.0.0",
-    "commander": "^8.1.0",
+    "commander": "^8.3.0",
     "debug": "^4.3.2",
     "deep-object": "^1.0.0",
     "dot2val": "^1.2.2",
