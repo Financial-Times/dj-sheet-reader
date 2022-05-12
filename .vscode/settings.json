@@ -1,0 +1,23 @@
+{
+	"files.exclude": {
+		"**/.git": true,
+		"**/.DS_Store": true
+	},
+	"search.exclude": {
+		"**/node_modules": true,
+		"**/coverge": true,
+		"**/package-lock.json": true
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"eslint.probe": ["javascript", "javascriptreact"],
+	"editor.formatOnSave": true,
+	"editor.formatOnPaste": false,
+	"editor.codeActionsOnSave": ["source.formatDocument", "source.fixAll.eslint"],
+	"npm.validate.enable": true,
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	}
+}
