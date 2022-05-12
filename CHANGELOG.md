@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.4...v1.0.5) (2022-05-12)
+
+
+### Bug Fixes
+
+* **build:** incorrect branch name on codeql action ([d5bd7c9](https://github.com/Financial-Times/dj-sheet-reader/commit/d5bd7c9ce8afb62e19bc103b540408e1f825c965))
+
 ## [1.0.4](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.3...v1.0.4) (2022-05-12)
 
 
