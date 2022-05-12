@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.2...v1.0.3) (2022-05-12)
+
+
+### Bug Fixes
+
+* upgrade markdown-it-anchor from 8.1.2 to 8.4.1 ([54d278b](https://github.com/Financial-Times/dj-sheet-reader/commit/54d278bb959c6bc6b5a655d9d4fa7b37f34e96d8))
+
 ## [1.0.2](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.1...v1.0.2) (2022-05-12)
 
 
