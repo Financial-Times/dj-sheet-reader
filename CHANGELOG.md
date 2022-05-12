@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.3...v1.0.4) (2022-05-12)
+
+
+### Bug Fixes
+
+* **deps:** security vulnerabilities ([842f603](https://github.com/Financial-Times/dj-sheet-reader/commit/842f603594c2bf98d59d4e2138ceada60b36f565))
+
 ## [1.0.3](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.2...v1.0.3) (2022-05-12)
 
 
