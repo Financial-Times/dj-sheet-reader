@@ -3,8 +3,15 @@ updates:
   - package-ecosystem: npm
     directory: '/'
     schedule:
-      interval: daily
+      interval: 'weekly'
+      day: 'monday'
+      time: '11:00'
+      timezone: 'Europe/London'
     commit-message:
       prefix: fix
       prefix-development: chore
       include: scope
+    labels:
+      - 'dependencies'
+    ignore:
+      - dependency-name: 'snyk'
