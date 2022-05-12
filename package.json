@@ -9,7 +9,8 @@
     "test": "jest --verbose=false",
     "eslint": "eslint . --ext .js --fix",
     "prettier": "prettier --write --ignore-unknown .",
-    "lint": "npm run prettier && npm run eslint"
+    "lint": "npm run prettier && npm run eslint",
+    "verify": "eslint ."
   },
   "author": "",
   "license": "MIT",
