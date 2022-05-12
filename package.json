@@ -8,7 +8,7 @@
     "prepare": "husky install",
     "test": "jest --verbose=false",
     "eslint": "eslint . --ext .js --fix",
-    "prettier": "prettier --write '**/*.{js,json}'",
+    "prettier": "prettier --write --ignore-unknown .",
     "lint": "npm run prettier && npm run eslint"
   },
   "author": "",

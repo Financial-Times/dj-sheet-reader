@@ -12,8 +12,8 @@ module.exports = {
 		'plugin:jest/recommended',
 		'plugin:jest-formatting/recommended',
 		'plugin:prettier/recommended',
-		'prettier',
 		'eslint:recommended',
+		'prettier',
 	],
 	plugins: ['jest-formatting'],
 }
