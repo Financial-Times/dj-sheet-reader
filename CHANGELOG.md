@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.1...v1.0.2) (2022-05-12)
+
+
+### Bug Fixes
+
+* upgrade commander from 8.1.0 to 8.3.0 ([97b5353](https://github.com/Financial-Times/dj-sheet-reader/commit/97b53535d9b2127b05f16b70a8038d2e6f29287f))
+
 ## [1.0.1](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.0...v1.0.1) (2021-09-03)
 
 
