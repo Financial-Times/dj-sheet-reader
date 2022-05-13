@@ -1,4 +1,4 @@
-const groupBy = require('lodash.groupby')
+const { groupBy } = require('lodash')
 const formatters = require('./formatters/all')
 
 function getFormatterFunction(name) {

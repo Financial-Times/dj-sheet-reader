@@ -1,5 +1,5 @@
 const { columns } = require('./column')
-const partition = require('lodash.partition')
+const { partition } = require('lodash')
 
 function isRestricted(raw) {
 	if (!raw) return false
