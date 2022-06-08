@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.5...v1.0.6) (2022-06-08)
+
+
+### Bug Fixes
+
+* **deps:** lodash security vulnerability ([f89a7a9](https://github.com/Financial-Times/dj-sheet-reader/commit/f89a7a9c94af1c81ae56d7ec4c0c6efb534921d9))
+
 ## [1.0.5](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.4...v1.0.5) (2022-05-12)
 
 
