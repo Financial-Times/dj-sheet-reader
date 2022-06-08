@@ -50,6 +50,6 @@
     "semantic-release": "^17.4.7"
   },
   "volta": {
-    "node": "12.22.12"
+    "node": "14.19.3"
   }
 }
