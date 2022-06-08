@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.6...v1.0.7) (2022-06-08)
+
+
+### Bug Fixes
+
+* **deps:** bump semver-regex from 3.1.3 to 3.1.4 ([a0f16e0](https://github.com/Financial-Times/dj-sheet-reader/commit/a0f16e0f886e7a0e3ccc335708faef698aaa84b9))
+
 ## [1.0.6](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.5...v1.0.6) (2022-06-08)
 
 
