@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.8...v1.0.9) (2023-02-08)
+
+
+### Bug Fixes
+
+* **deps:** bump moment from 2.29.2 to 2.29.4 ([1ee1e8f](https://github.com/Financial-Times/dj-sheet-reader/commit/1ee1e8fae87e2f1097e344e5bd0ce7ee7de74eb7))
+
 ## [1.0.8](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.7...v1.0.8) (2023-02-08)
 
 
