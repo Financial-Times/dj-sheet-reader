@@ -1,3 +1,12 @@
+## [1.0.8](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.7...v1.0.8) (2023-02-08)
+
+
+### Bug Fixes
+
+* **deps:** bump commander from 8.3.0 to 10.0.0 ([4edb6e8](https://github.com/Financial-Times/dj-sheet-reader/commit/4edb6e849b7d19f7f03978ce69a4013191ec8666))
+* **deps:** bump json5 from 2.2.1 to 2.2.3 ([8f5ac9b](https://github.com/Financial-Times/dj-sheet-reader/commit/8f5ac9b743c673bbe6ef3ade06756aee6beaf318))
+* **deps:** bump markdown-it-anchor from 8.4.1 to 8.6.6 ([b6423f2](https://github.com/Financial-Times/dj-sheet-reader/commit/b6423f2edfe444c95e151230744830b322d47549))
+
 ## [1.0.7](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.6...v1.0.7) (2022-06-08)
 
 
