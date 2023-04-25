@@ -43,9 +43,9 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^8.0.1",
     "jest": "^28.1.1",
-    "lint-staged": "^11.1.2",
+    "lint-staged": "^13.2.1",
     "prettier": "^2.3.2",
-    "semantic-release": "^19.0.2"
+    "semantic-release": "^21.0.1"
   },
   "volta": {
     "node": "16.15.1"
