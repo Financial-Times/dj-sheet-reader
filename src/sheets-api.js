@@ -8,15 +8,22 @@ const pTimeout = require('p-timeout')
 
 const agent = new Agent({ keepAlive: true, keepAliveMsecs: 1 })
 
-function getSpreadsheetClient(email, subject, key) {
+const defaultScopes = [
+	'https://www.googleapis.com/auth/drive.readonly',
+	'https://www.googleapis.com/auth/spreadsheets.readonly',
+]
+
+function getSpreadsheetClient(email, subject, key, scopes) {
 	try {
+		scopes = Array.isArray(scopes) ? scopes : typeof scopes === 'string' ? [scopes] : defaultScopes
+
 		return google.sheets({
 			version: 'v4',
 			auth: new google.auth.JWT({
-				email: email,
-				key: key,
-				scopes: ['https://www.googleapis.com/auth/drive'],
-				subject: subject,
+				email,
+				key,
+				scopes,
+				subject,
 			}),
 		})
 	} catch (error) {

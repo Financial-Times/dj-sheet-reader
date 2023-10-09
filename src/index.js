@@ -3,7 +3,7 @@ const { getSpreadsheetClient } = require('./sheets-api')
 
 function SheetReader(options) {
 	const {
-		auth: { email, subject, key },
+		auth: { email, subject, key, scopes },
 	} = options
 	let client
 
@@ -14,7 +14,7 @@ function SheetReader(options) {
 	}
 
 	function refreshAuth() {
-		client = getSpreadsheetClient(email, subject, key)
+		client = getSpreadsheetClient(email, subject, key, scopes)
 		return api
 	}
 

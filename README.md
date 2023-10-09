@@ -18,7 +18,7 @@
 
 ## Usage
 
-First, you'll need a Google API Service Account email and key. A service account reads/writes data from the Google API on behalf Google user/email: this is known as the "subject" account.
+First, you'll need a Google API Service Account email and key. A service account reads/writes data from the Google API on behalf of a Google user/email. See the `auth` configuration options below.
 
 ```js
 const SheetReader = require('@financial-times/sheet-reader')
@@ -27,6 +27,7 @@ const auth = {
 	key: process.env.KEY,
 	email: process.env.EMAIL,
 	subject: process.env.SUBJECT,
+	scopes: ['https://www.googleapis.com/auth/example.scope'],
 }
 
 const spreadsheetId = '__your__sheet__id__'
@@ -43,9 +44,17 @@ process.stdout.write(JSON.stringify(data))
 
 `options`:
 
-- `auth.email`: is the Email/ID of the service account
+- `auth.email`: is the Email/ID of the service account. It looks like `367017482409-ki8573gid665t1ee2m8t2omwvj3dbt2mj@developer.gserviceaccount.com`
 - `auth.key`: is a key that's generated for the service account that's used authenticate with the Google API
-- `auth.subject`: a Google Email account (e.g a person or email group) who is the subject of the API request and is used for authorisation. This library can only fetch the data for a spreadsheet if the subject has read access.
+- `auth.subject`: a Google Email account (e.g a person or email group) who is the subject of the API request and is used for authorisation. This package will be making requests to the Google API on behalf of this user and can only fetch data for a spreadsheet when the subject has read access.
+- `auth.scopes`: An optional array of scopes that have been setup for the key when connecting to the Spreadsheet API in Google Cloud console . The default scopes (show below) are the most common configuation.
+
+```
+scopes: [
+	'https://www.googleapis.com/auth/drive.readonly',
+	'https://www.googleapis.com/auth/spreadsheets.readonly'
+],
+```
 
 **`fetchSheet(spreadsheetId: string, sheetNames: string[], options: object):Promise<object>`**
 
