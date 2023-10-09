@@ -97,6 +97,10 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 						Boolean(error.errors.length) &&
 						error.errors[0].message === `Unable to parse range: ${sheetName}`
 					) {
+						if (isOptional) {
+							debug(`Optional sheet ${sheetName} not found. Continue successfully without the sheet`)
+							return []
+						}
 						throw new createError.NotFound(`Sheet not found: sheetName="${sheetName}"`)
 					}
 					throw new createError.BadRequest('Bad Request [possibly invalid spreadsheet ID]')
@@ -107,6 +111,14 @@ async function getSheet(client, spreadsheetId, sheetName, isOptional, signal) {
 				case 429:
 					if (Array.isArray(error.errors) && Boolean(error.errors.length)) {
 						debug(`${error.errors[0].reason}: ${error.errors[0].message}`)
+					}
+					if (isOptional) {
+						// Google API seems to rate limit frequenct fetches for non existing data.
+						// So a rate limit is more common for optional sheets.
+						debug(
+							`Optional sheet ${sheetName} failed due to Google spreadsheet API rate limit exceeded. Continue successfully without the sheet`,
+						)
+						return []
 					}
 					throw new createError.TooManyRequests(`Google spreadsheet API rate limit exceeded`)
 				case 'ETIMEDOUT':
