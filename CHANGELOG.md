@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.10...v1.0.11) (2023-10-09)
+
+
+### Bug Fixes
+
+* **deps:** bump markdown-it from 12.3.2 to 13.0.1 ([13229f6](https://github.com/Financial-Times/dj-sheet-reader/commit/13229f6b7bac6751abfc5457e92147db6c2e8031))
+
 ## [1.0.9](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.8...v1.0.9) (2023-02-08)
 
 
