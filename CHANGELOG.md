@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.11...v2.0.0) (2023-10-09)
+
+
+* feat!: add optional scopes option ([9b71596](https://github.com/Financial-Times/dj-sheet-reader/commit/9b715967bb338b903b43d8daa66d66bf1c2d1d9a))
+
+
+### BREAKING CHANGES
+
+* Default Google Auth API scopes changed
+
 ## [1.0.11](https://github.com/Financial-Times/dj-sheet-reader/compare/v1.0.10...v1.0.11) (2023-10-09)
 
 
