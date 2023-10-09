@@ -1,9 +1,4 @@
-const { key, spreadsheetId, sheetNames } = require('./config')
 const SheetReader = require('./src')
-
-const SUBJECT = process.env.GOOGLE_USER
-const EMAIL = process.env.GOOGLE_CLIENT_EMAIL
-const KEY = process.env.GOOGLE_SERVICE_KEY || process.env.GOOGLE_KEY || key
 
 async function main() {
 	const options = {
@@ -11,10 +6,14 @@ async function main() {
 	}
 
 	const auth = {
-		key: KEY,
-		email: EMAIL,
-		subject: SUBJECT,
+		key: process.env.GOOGLE_SERVICE_KEY,
+		email: process.env.GOOGLE_CLIENT_EMAIL,
+		subject: process.env.GOOGLE_USER,
+		scopes: process.env.GOOGLE_CLIENT_SCOPES.split(/,\s*/g),
 	}
+
+	const spreadsheetId = process.env.spreadsheetId
+	const sheetNames = process.env.sheetNames.split(/,\s*/g)
 
 	const data = await SheetReader({ auth }).fetchSheet(spreadsheetId, sheetNames, options)
 
