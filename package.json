@@ -21,7 +21,7 @@
     "debug": "^4.3.2",
     "deep-object": "^1.0.0",
     "dot2val": "^1.2.2",
-    "googleapis": "^84.0.0",
+    "googleapis": "^127.0.0",
     "http-errors": "^1.8.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
