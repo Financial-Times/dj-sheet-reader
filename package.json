@@ -49,9 +49,11 @@
     "semantic-release": "^19.0.2"
   },
   "volta": {
-    "node": "16.15.1"
+    "node": "20.11.1",
+    "npm": "10.2.4"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=20",
+    "npm": ">10"
   }
 }
